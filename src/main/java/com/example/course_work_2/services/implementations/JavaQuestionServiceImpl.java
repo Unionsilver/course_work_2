@@ -41,6 +41,6 @@ public class JavaQuestionServiceImpl implements QuestionService {
 
     @Override
     public Question getRandomQuestion() {
-        return questionList.toArray(Question[]::new)[rng.nextInt(questionList.size())];
+        return questionList.toArray(Question[]::new)[ rng.nextInt(questionList.size())];
     }
 }

@@ -23,7 +23,7 @@ public class ExamServiceImpl implements ExamService {
         int limit = 15;
 
         if (amount > limit) {
-            throw new GlobalControllerExceptionHandler("Requested more questions than available.");
+            throw new GlobalControllerExceptionHandler(" Requested more questions than available.");
         }
         Collection<Question> questions = new HashSet<>();
 
