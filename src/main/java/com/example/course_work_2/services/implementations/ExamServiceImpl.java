@@ -8,10 +8,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Random;
+import java.util.Set;
+
 @Service
 public class ExamServiceImpl implements ExamService {
-    Random random;
+
     QuestionService questionService;
 
     public ExamServiceImpl(QuestionService questionService) {
@@ -20,19 +21,15 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public Collection<Question> getQuestions(int amount) {
-        int limit = 15;
+        Set<Question> questions = new HashSet<>();
 
-        if (amount > limit) {
-            throw new GlobalControllerExceptionHandler(" Requested more questions than available.");
+        if (questionService.getAll().stream().distinct().count() < amount) {
+            throw new GlobalControllerExceptionHandler();
         }
-        Collection<Question> questions = new HashSet<>();
+        while (questions.size() < amount) {
+            questions.add(questionService.getRandomQuestion());
 
-
-        for (int i = 0; i < amount; i++) {
-            Question randomQuestion = questionService.getRandomQuestion();
-            questions.add(randomQuestion);
         }
-
         return questions;
     }
 }
