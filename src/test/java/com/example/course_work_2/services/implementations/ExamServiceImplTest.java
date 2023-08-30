@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collection;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -28,7 +27,7 @@ class ExamServiceImplTest {
     @Test
     void getQuestions_enoughQuestionInList_setOfQuestionsReturned() {
         int amount = 2;
-        when(questionService.getAll()).thenReturn(List.of(question1,question2));
+        when(questionService.getRandomQuestion()).thenReturn(question1, question1, question2);
 
         Collection<Question> result = underTest.getQuestions(amount);
 

@@ -2,10 +2,7 @@ package com.example.course_work_2.controllers;
 
 import com.example.course_work_2.dto.Question;
 import com.example.course_work_2.services.interfaces.ExamService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -19,8 +16,8 @@ public class ExamController {
         this.examService = examService;
     }
 
-    @GetMapping("/{amount}")
-    public Collection<Question> getQuestions(@RequestParam int amount) {
+    @GetMapping("get/{amount}")
+    public Collection<Question> getQuestions(@PathVariable int amount) {
         return examService.getQuestions(amount);
     }
 }

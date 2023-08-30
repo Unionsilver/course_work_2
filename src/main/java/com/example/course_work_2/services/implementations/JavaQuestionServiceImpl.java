@@ -1,6 +1,7 @@
 package com.example.course_work_2.services.implementations;
 
 import com.example.course_work_2.dto.Question;
+import com.example.course_work_2.exceptions.ControllerException;
 import com.example.course_work_2.services.interfaces.QuestionService;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +18,8 @@ public class JavaQuestionServiceImpl implements QuestionService {
 
     @Override
     public Question add(String question, String answer) {
-        var result = new Question(question, answer);
-        questionList.add(result);
-        return result;
+
+        return add(new Question(question,answer));
     }
 
     @Override
@@ -41,6 +41,9 @@ public class JavaQuestionServiceImpl implements QuestionService {
 
     @Override
     public Question getRandomQuestion() {
+        if (questionList.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
         return questionList.toArray(Question[]::new)[ rng.nextInt(questionList.size())];
     }
 }

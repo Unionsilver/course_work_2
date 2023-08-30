@@ -27,4 +27,16 @@ class JavaQuestionServiceImplTest {
         Collection<Question> result = underTest.getAll();
         assertTrue(result.containsAll(Set.of(question1,question2)));
     }
+
+    @Test
+    void testAdd() {
+    }
+
+    @Test
+    void remove() {
+    }
+
+    @Test
+    void getRandomQuestion() {
+    }
 }
