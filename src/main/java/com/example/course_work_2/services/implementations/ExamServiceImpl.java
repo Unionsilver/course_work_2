@@ -13,9 +13,9 @@ import java.util.Set;
 @Service
 public class ExamServiceImpl implements ExamService {
 
-    QuestionService questionService;
+   private final QuestionService questionService;
 
-    private ExamServiceImpl(QuestionService questionService) {
+    public ExamServiceImpl(QuestionService questionService) {
         this.questionService = questionService;
     }
 
