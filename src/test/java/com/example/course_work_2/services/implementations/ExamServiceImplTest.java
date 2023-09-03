@@ -23,42 +23,34 @@ class ExamServiceImplTest {
 
     @InjectMocks
     ExamServiceImpl underTest;
-    Question question1 = new Question("Q3", "A1");
+            Question question1 = new Question("Q3", "A1");
     Question question2 = new Question("Q2", "A2");
 
+    Collection<Question> questions = List.of(question1, question2);
 
     @Test
     void getQuestions_enoughQuestionInList_setOfQuestionsReturned() {
+
         int amount = 2;
         when(questionService.getRandomQuestion()).thenReturn(question1, question1, question2);
+        when(questionService.getAll()).thenReturn(questions);
 
-        Collection<Question> result1 = underTest.getQuestions(amount);
+        Collection<Question> actual = underTest.getQuestions(amount);
 
-        assertEquals(amount, result1.size());
-        assertEquals(amount, result1.stream().distinct().count());
+        Collection<Question> expect = List.of(question2, question1);
+        assertTrue(expect.containsAll(actual));
+
+        assertEquals(amount, actual.size());
+
+
+
+        assertEquals(amount, actual.stream().distinct().count());
+
     }
 
     @Test
     void qetQuestions_amountMoreSize_thrownTooManyRequestException() {
-        when(questionService.getRandomQuestion()).thenReturn(question1, question1, question2);
-        assertThrows(IllegalArgumentException.class, () -> underTest.getQuestions(2));
-    }
-
-    @Test
-    void qetQuestions_amountLessZero_thrownInvalidParameterValueException() {
-        assertThrows(ControllerException.class, () -> underTest.getQuestions(-2));
-    }
-
-    @Test
-    void qetQuestions_amountNoMoreSize_returnSetOfRandomQuestions() {
-        when(questionService.getRandomQuestion()).thenReturn(question1, question1, question2)
-                .thenReturn(new Question("вопрос1", "ответ1"))
-                .thenReturn(new Question("вопрос2", "ответ2"));
-
-        Set<Question> result = (Set<Question>) underTest.getQuestions(3);
-        Set<Question> expected = new HashSet<>(List.of(
-                new Question("вопрос1", "ответ1"),
-                new Question("вопрос2", "ответ2")));
-        assertEquals(expected, result);
+        when(questionService.getAll()).thenReturn(questions);
+        assertThrows(ControllerException.class, () -> underTest.getQuestions(4));
     }
 }

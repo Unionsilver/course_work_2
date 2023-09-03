@@ -1,7 +1,6 @@
 package com.example.course_work_2.services.implementations;
 
 import com.example.course_work_2.dto.Question;
-import com.example.course_work_2.exceptions.ControllerException;
 import com.example.course_work_2.services.interfaces.QuestionService;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +43,6 @@ public class JavaQuestionServiceImpl implements QuestionService {
         if (questionList.isEmpty()) {
             throw new IllegalArgumentException();
         }
-        return questionList.toArray(Question[]::new)[ rng.nextInt(questionList.size())];
+        return  questionList.toArray(Question[]::new)[ rng.nextInt(questionList.size())];
     }
 }

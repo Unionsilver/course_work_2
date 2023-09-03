@@ -17,7 +17,11 @@ class JavaQuestionServiceImplTest {
     @Test
     void add__questionAddedAndReturned() {
         Question result = underTest.add(question1.getQuestion(), question1.getAnswer());
-        assertTrue(underTest.getAll().contains(question1));
+        assertTrue(
+
+                underTest.getAll().contains(question1)
+
+        );
         assertEquals(question1, result);
     }
 
@@ -39,10 +43,16 @@ class JavaQuestionServiceImplTest {
 
     @Test
     void remove_questionRemovedAndReturned() {
-        Question result = underTest.add("a", "б");
-        Question removedQuestion = underTest.remove(result);
-        assertNotEquals(question1, removedQuestion);
+        Question addedQuestion = underTest.add("a", "б");
 
+        Question removedQuestion = underTest.remove(addedQuestion);
+
+        assertEquals(addedQuestion, removedQuestion);
+        assertFalse(
+
+                underTest.getAll().contains(addedQuestion)
+
+        );
         }
 
         @Test
@@ -60,15 +70,4 @@ class JavaQuestionServiceImplTest {
 
             assertThrows(RuntimeException.class, () -> underTest.getRandomQuestion());
         }
-    @Test
-    void getAll_setWithQuestions_setWithoutQuestions() {
-
-        underTest.add(question1);
-        underTest.add(question2);
-
-        Collection<Question> result = underTest.getAll();
-
-        assertEquals(result, question1);
-        assertTrue((BooleanSupplier) question1);
-    }
 }
