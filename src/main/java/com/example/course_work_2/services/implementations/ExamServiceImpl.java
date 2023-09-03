@@ -1,18 +1,20 @@
 package com.example.course_work_2.services.implementations;
 
 import com.example.course_work_2.dto.Question;
-import com.example.course_work_2.exceptions.GlobalControllerExceptionHandler;
+import com.example.course_work_2.exceptions.ControllerException;
+import com.example.course_work_2.exceptions.NotEnoughQuestionsException;
 import com.example.course_work_2.services.interfaces.ExamService;
 import com.example.course_work_2.services.interfaces.QuestionService;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Random;
+import java.util.Set;
+
 @Service
 public class ExamServiceImpl implements ExamService {
-    Random random;
-    QuestionService questionService;
+
+   private final QuestionService questionService;
 
     public ExamServiceImpl(QuestionService questionService) {
         this.questionService = questionService;
@@ -20,19 +22,18 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public Collection<Question> getQuestions(int amount) {
-        int limit = 15;
-
-        if (amount > limit) {
-            throw new GlobalControllerExceptionHandler("Requested more questions than available.");
-        }
-        Collection<Question> questions = new HashSet<>();
-
-
-        for (int i = 0; i < amount; i++) {
-            Question randomQuestion = questionService.getRandomQuestion();
-            questions.add(randomQuestion);
+        Set<Question> questions = new HashSet<>();
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Должно быть больше нуля");
         }
 
+        if (questionService.getAll().size() < amount) {
+            throw new NotEnoughQuestionsException();
+        }
+        while (questions.size() < amount) {
+            questions.add(questionService.getRandomQuestion());
+
+        }
         return questions;
     }
 }

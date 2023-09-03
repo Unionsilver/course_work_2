@@ -17,9 +17,8 @@ public class JavaQuestionServiceImpl implements QuestionService {
 
     @Override
     public Question add(String question, String answer) {
-        var result = new Question(question, answer);
-        questionList.add(result);
-        return result;
+
+        return add(new Question(question,answer));
     }
 
     @Override
@@ -41,6 +40,9 @@ public class JavaQuestionServiceImpl implements QuestionService {
 
     @Override
     public Question getRandomQuestion() {
-        return questionList.toArray(Question[]::new)[rng.nextInt(questionList.size())];
+        if (questionList.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return  questionList.toArray(Question[]::new)[ rng.nextInt(questionList.size())];
     }
 }

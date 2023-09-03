@@ -44,7 +44,7 @@ public class Question {
     public String toString() {
         return "Question{" +
                 "question='" + question + '\'' +
-                ", answer='" + answer + '\'' +
+                ", answer= '" + answer + '\'' +
                 '}';
     }
 }

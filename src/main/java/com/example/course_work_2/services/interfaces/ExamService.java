@@ -5,7 +5,7 @@ import com.example.course_work_2.dto.Question;
 
 import java.util.Collection;
 
-public interface ExamService {
-    Collection<Question> getQuestions(int amount);
+public interface ExamService  {
+    Collection<Question> getQuestions(int  amount);
 
 }

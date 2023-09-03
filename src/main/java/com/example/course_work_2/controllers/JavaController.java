@@ -23,7 +23,7 @@ public class JavaController {
     @GetMapping(path = "/add")
     public ResponseEntity<Question> addQuestion(@RequestParam String question, @RequestParam String answer) {
         var result = questionService.add(question, answer);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result,  HttpStatus.OK);
     }
 
     @GetMapping()
